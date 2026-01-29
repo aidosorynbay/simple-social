@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Social</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Auth screen -->
+    <main id="auth-screen" class="auth-screen">
+      <div class="auth-card">
+        <h1 class="logo">Simple Social</h1>
+        <p class="tagline">Share moments. Keep it simple.</p>
+        <div class="auth-tabs">
+          <button type="button" class="tab active" data-tab="login">Log in</button>
+          <button type="button" class="tab" data-tab="register">Register</button>
+        </div>
+        <form id="login-form" class="auth-form">
+          <label for="login-email">Email</label>
+          <input id="login-email" type="email" required placeholder="you@example.com" autocomplete="email" />
+          <label for="login-password">Password</label>
+          <input id="login-password" type="password" required placeholder="••••••••" autocomplete="current-password" />
+          <p id="auth-error" class="error-msg" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
+        <form id="register-form" class="auth-form hidden">
+          <label for="register-email">Email</label>
+          <input id="register-email" type="email" required placeholder="you@example.com" autocomplete="email" />
+          <label for="register-password">Password</label>
+          <input id="register-password" type="password" required placeholder="••••••••" autocomplete="new-password" minlength="8" />
+          <p id="register-error" class="error-msg" aria-live="polite"></p>
+          <button type="submit" class="btn btn-primary">Create account</button>
+        </form>
+      </div>
+    </main>
+
+    <!-- Feed screen -->
+    <main id="feed-screen" class="feed-screen hidden">
+      <header class="header">
+        <h1 class="logo">Simple Social</h1>
+        <div class="header-actions">
+          <button type="button" id="new-post-btn" class="btn btn-primary" aria-label="New post">New post</button>
+          <button type="button" id="logout-btn" class="btn btn-ghost">Log out</button>
+        </div>
+      </header>
+      <div class="upload-modal hidden" id="upload-modal">
+        <div class="modal-backdrop" id="upload-modal-backdrop"></div>
+        <div class="modal-content">
+          <h2>New post</h2>
+          <form id="upload-form">
+            <label for="post-file">Image or video</label>
+            <input id="post-file" type="file" accept="image/*,video/*" required />
+            <label for="post-caption">Caption</label>
+            <textarea id="post-caption" placeholder="What's on your mind?" rows="3"></textarea>
+            <p id="upload-error" class="error-msg" aria-live="polite"></p>
+            <div class="modal-actions">
+              <button type="button" class="btn btn-ghost" id="upload-cancel">Cancel</button>
+              <button type="submit" class="btn btn-primary">Post</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <section class="feed">
+        <p id="feed-loading" class="feed-status">Loading…</p>
+        <p id="feed-empty" class="feed-status hidden">No posts yet. Be the first to share something.</p>
+        <div id="feed-list" class="feed-list"></div>
+      </section>
+    </main>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html>

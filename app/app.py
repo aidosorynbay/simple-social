@@ -1,4 +1,7 @@
 from fastapi import FastAPI, HTTPException, File, UploadFile, Depends, Form
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 from sqlalchemy import select
 from app.schemas import PostCreate, PostResponse, UserCreate, UserUpdate, UserRead
 from app.db import Post, get_async_session, create_db_and_tables, User
@@ -17,6 +20,14 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8000", "http://127.0.0.1:8000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(
     fastapi_users.get_auth_router(auth_backend),
@@ -138,3 +149,7 @@ async def delete_post(
         return {"message": "Post deleted successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+static_dir = Path(__file__).resolve().parent.parent / "static"
+if static_dir.is_dir():
+    app.mount("/", StaticFiles(directory=str(static_dir), html=True), name="static")
